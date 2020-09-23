@@ -18,6 +18,17 @@ class App extends React.Component {
     });
   };
 
+  filteredItems = () => {
+    const re = new RegExp(this.state.search, 'i');
+    return this.state.items.filter(item => {
+      return re.test(item.name);
+    });
+  }
+
+  handleSearch = (e) => {
+    this.setState({ search: e.target.value });
+  }
+
   selectItem = (id) => {
     const { items, selectedItems } = this.state;
     const selectedItem = items.find(item => item.id === id);
@@ -33,16 +44,17 @@ class App extends React.Component {
   }
 
   render() {
+    const { items, selectedItems } = this.state;
     return (
       <div className="wrapper">
-        <Header />
+        <Header items={selectedItems} />
         <div className="container menu-builder">
           <div className="row">
             <div className="col-4">
-              <MenuPicker items={this.state.items} selectItem={this.selectItem} />
+              <MenuPicker items={this.filteredItems()} selectItem={this.selectItem} handleSearch={this.handleSearch} />
             </div>
             <div className="col-8">
-              <MenuPreview items={this.state.selectedItems} removeItem={this.removeItem} />
+              <MenuPreview items={selectedItems} removeItem={this.removeItem} />
             </div>
           </div>
         </div>

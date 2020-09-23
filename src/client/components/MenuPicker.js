@@ -8,13 +8,14 @@ type Props = {
     id: number,
     dietaries: Array<string>,
   }>,
+  handleSearch: Function,
   selectItem: Function,
 };
 
-const MenuPicker = ({ items, selectItem }: Props): React$Element<React$FragmentType> => (
+const MenuPicker = ({ items, handleSearch, selectItem }: Props): React$Element<React$FragmentType> => (
   <React.Fragment>
     <div className="filters">
-      <input className="form-control" placeholder="Name" />
+      <input className="form-control" placeholder="Name" onChange={handleSearch} />
     </div>
 
     {items.length && (
