@@ -1,129 +1,54 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import axios from "axios";
+import Header from "./components/Header";
+import MenuPicker from "./components/MenuPicker";
+import MenuPreview from "./components/MenuPreview";
+import "./App.css";
 
-export default () => (
-  <div className="wrapper">
-    <div className="menu-summary">
-      <div className="container">
-        <div className="row">
-          <div className="col-6 menu-summary-left">
-            <span>6 items</span>
-          </div>
-          <div className="col-6 menu-summary-right">
-            6x <span className="dietary">ve</span>
-            4x <span className="dietary">v</span>
-            12x <span className="dietary">n!</span>
+class App extends React.Component {
+  state = {
+    items: [],
+    selectedItems: [],
+  };
+
+  componentDidMount = () => {
+    axios.get("/api/items").then((res) => {
+      const { items } = res.data;
+      this.setState({ items });
+    });
+  };
+
+  selectItem = (id) => {
+    const { items, selectedItems } = this.state;
+    const selectedItem = items.find(item => item.id === id);
+    !selectedItems.includes(selectedItem) && selectedItems.push(selectedItem);
+    this.setState({ selectedItems });
+  }
+
+  removeItem = (id) => {
+    const { selectedItems } = this.state;
+    const selectedItem = selectedItems.find(item => item.id === id);
+    selectedItem && selectedItems.splice(selectedItems.indexOf(selectedItem), 1);
+    this.setState({ selectedItems });
+  }
+
+  render() {
+    return (
+      <div className="wrapper">
+        <Header />
+        <div className="container menu-builder">
+          <div className="row">
+            <div className="col-4">
+              <MenuPicker items={this.state.items} selectItem={this.selectItem} />
+            </div>
+            <div className="col-8">
+              <MenuPreview items={this.state.selectedItems} removeItem={this.removeItem} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div className="container menu-builder">
-      <div className="row">
-        <div className="col-4">
-          <div className="filters">
-            <input className="form-control" placeholder="Name" />
-          </div>
-          <ul className="item-picker">
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-            </li>
-          </ul>
-        </div>
-        <div className="col-8">
-          <h2>Menu preview</h2>
-          <ul className="menu-preview">
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-              <button className="remove-item">x</button>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-              <button className="remove-item">x</button>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-              <button className="remove-item">x</button>
-            </li>
-            <li className="item">
-              <h2>Dummy item</h2>
-              <p>
-                <span className="dietary">ve</span>
-                <span className="dietary">v</span>
-                <span className="dietary">n!</span>
-              </p>
-              <button className="remove-item">x</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+    );
+  }
+}
+
+export default App;
