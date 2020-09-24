@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import ItemCard from "./ItemCard";
+import ItemCard from "../ItemCard/ItemCard";
 
 type Props = {
   items: Array<{

@@ -9,11 +9,12 @@ type Props = {
 };
 
 const Header = ({ items }: Props): React$Element<React$FragmentType> => {
+  const dietaryTypes = ["ve", "v", "n!", "df", "gf", "rsf"];
 
   const dietaryCount = (type) => {
     let count = 0;
     items.forEach((item) => {
-      item.dietaries.forEach(dietary => dietary === type && count++);
+      item.dietaries.forEach((dietary) => dietary === type && count++);
     });
     return count;
   };
@@ -26,12 +27,11 @@ const Header = ({ items }: Props): React$Element<React$FragmentType> => {
             <span>{items.length} items</span>
           </div>
           <div className="col-6 menu-summary-right">
-            {dietaryCount("ve")}x<span className="dietary">ve</span>
-            {dietaryCount("ve")}x<span className="dietary">v</span>
-            {dietaryCount("n!")}x<span className="dietary">n!</span>
-            {dietaryCount("df")}x<span className="dietary">df</span>
-            {dietaryCount("gf")}x<span className="dietary">gf</span>
-            {dietaryCount("rsf")}x<span className="dietary">rsf</span>
+            {dietaryTypes.map((type) => (
+              <span key={type}>
+                {dietaryCount(type)}x<span className="dietary">{type}</span>
+              </span>
+            ))}
           </div>
         </div>
       </div>

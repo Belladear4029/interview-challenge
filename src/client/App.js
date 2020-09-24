@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Header from "./components/Header";
-import MenuPicker from "./components/MenuPicker";
-import MenuPreview from "./components/MenuPreview";
+import Header from "./components/Header/Header";
+import MenuPicker from "./components/MenuPicker/MenuPicker";
+import MenuPreview from "./components/MenuPreview/MenuPreview";
 import "./App.css";
 
 class App extends React.Component {
