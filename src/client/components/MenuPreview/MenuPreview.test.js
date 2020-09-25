@@ -1,6 +1,7 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 import MenuPreview from "./MenuPreview";
+import ItemCard from "../ItemCard/ItemCard";
 import { items } from "./mock.data";
 
 const removeItem = () => {};
@@ -15,8 +16,13 @@ describe("<MenuPreview>", () => {
     const wrapper = shallowDefault({ items });
     expect(wrapper).toMatchSnapshot();
   });
-  it("renders correct props", () => {
+  it("receives correct props", () => {
     const wrapper = mountDefault({ items });
-    expect(wrapper.props().items.length).toEqual(5);
+    expect(wrapper.props().items.length).toEqual(3);
+    expect(wrapper.props().removeItem.length).toEqual(1);
+  });
+  it("renders the correct child components", () => {
+    const wrapper = shallowDefault({ items });
+    expect(wrapper.find(ItemCard).length).toEqual(3);
   });
 });

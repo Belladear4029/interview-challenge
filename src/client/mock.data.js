@@ -13,6 +13,16 @@ export const items = [
       id: 1009,
       name: 'Mackerel Salad Box',
       dietaries: ['gf', 'df'],
+    },
+    {
+      id: 10010,
+      name: 'Pasta Salad Box',
+      dietaries: ['ve', 'v', 'gf', 'df'],
+    },
+    {
+      id: 10011,
+      name: 'Tuna Salad Box',
+      dietaries: [],
     }
   ];
   
